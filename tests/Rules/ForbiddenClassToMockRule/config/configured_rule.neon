@@ -1,0 +1,7 @@
+services:
+    -
+        class: Rector\Mockstan\Rules\ForbiddenClassToMockRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            forbiddenTypes:
+                - Rector\Mockstan\Tests\Rules\ForbiddenClassToMockRule\Source\SomeForbiddenType

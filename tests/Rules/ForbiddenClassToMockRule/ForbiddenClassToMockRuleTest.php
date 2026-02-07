@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Rector\Mockstan\Tests\Rules\NoTestMocksRule;
+namespace Rector\Mockstan\Tests\Rules\ForbiddenClassToMockRule;
 
 use Iterator;
 use Override;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Rector\Mockstan\Rules\NoTestMocksRule;
+use Rector\Mockstan\Rules\ForbiddenClassToMockRule;
+use Rector\Mockstan\Tests\Rules\ForbiddenClassToMockRule\Source\SomeForbiddenType;
+use Symfony\Component\HttpFoundation\Request;
 
-final class NoTestMocksRuleTest extends RuleTestCase
+final class ForbiddenClassToMockRuleTest extends RuleTestCase
 {
     /**
      * @param array<int, array<string|int>> $expectedErrorMessagesWithLines
@@ -29,10 +31,13 @@ final class NoTestMocksRuleTest extends RuleTestCase
     {
         yield [
             __DIR__ . '/Fixture/SomeMocking.php',
-            [[sprintf(NoTestMocksRule::ERROR_MESSAGE, 'SomeClass'), 13]],
+            [[sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, Request::class), 14]],
         ];
 
-        yield [__DIR__ . '/Fixture/SkipApiMock.php', []];
+        yield [
+            __DIR__ . '/Fixture/HandleExtractForbiddenType.php',
+            [[sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, SomeForbiddenType::class), 14]],
+        ];
     }
 
     /**
@@ -48,6 +53,6 @@ final class NoTestMocksRuleTest extends RuleTestCase
 
     protected function getRule(): Rule
     {
-        return self::getContainer()->getByType(NoTestMocksRule::class);
+        return self::getContainer()->getByType(ForbiddenClassToMockRule::class);
     }
 }

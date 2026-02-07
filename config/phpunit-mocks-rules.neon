@@ -1,8 +1,13 @@
 rules:
     # mocking
     - Rector\Mockstan\Rules\NoMockOnlyTestRule
+    - Rector\Mockstan\Rules\NoDoubleConsecutiveTestMockRule
+
+    # explicit
+    - Rector\Mockstan\Rules\ExplicitExpectsMockMethodRule
 
     # better alternative than mocks
     - Rector\Mockstan\Rules\NoDocumentMockingRule
     - Rector\Mockstan\Rules\NoEntityMockingRule
+
     - Rector\Mockstan\Rules\NoMockObjectAndRealObjectPropertyRule

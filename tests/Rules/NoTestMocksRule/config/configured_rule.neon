@@ -1,7 +1,0 @@
-services:
-    -
-        class: Rector\Mockstan\Rules\NoTestMocksRule
-        tags: [phpstan.rules.rule]
-        arguments:
-            allowedTypes:
-                - Rector\Mockstan\Tests\Rules\NoTestMocksRule\Source\SomeAllowedType

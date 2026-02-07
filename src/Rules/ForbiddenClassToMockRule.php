@@ -12,16 +12,18 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\ObjectType;
 use Rector\Mockstan\Enum\RuleIdentifier;
+use Rector\Mockstan\Enum\SymfonyClass;
+use Rector\Mockstan\Helper\NamingHelper;
 
 /**
  * @implements Rule<MethodCall>
  */
-final readonly class NoTestMocksRule implements Rule
+final readonly class ForbiddenClassToMockRule implements Rule
 {
     /**
      * @api
      */
-    public const string ERROR_MESSAGE = 'Mocking "%s" class is forbidden. Use direct/anonymous class instead for better static analysis';
+    public const string ERROR_MESSAGE = 'Mocking "%s" class is forbidden. Use direct new instance or anonymous class instead for better static analysis';
 
     /**
      * @var string[]
@@ -29,10 +31,17 @@ final readonly class NoTestMocksRule implements Rule
     private const array MOCKING_METHOD_NAMES = ['createMock', 'createPartialMock', 'createConfiguredMock', 'createStub'];
 
     /**
-     * @param string[] $allowedTypes
+     * @var string[]
+     */
+    private const array FORBIDDEN_TYPES = [
+        SymfonyClass::REQUEST,
+    ];
+
+    /**
+     * @param string[] $forbiddenTypes
      */
     public function __construct(
-        private array $allowedTypes = []
+        private array $forbiddenTypes = []
     ) {
     }
 
@@ -46,12 +55,7 @@ final readonly class NoTestMocksRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        if (! $node->name instanceof Identifier) {
-            return [];
-        }
-
-        $methodName = $node->name->toString();
-        if (! in_array($methodName, self::MOCKING_METHOD_NAMES, true)) {
+        if (! NamingHelper::isNames($node->name, self::MOCKING_METHOD_NAMES)) {
             return [];
         }
 
@@ -60,15 +64,17 @@ final readonly class NoTestMocksRule implements Rule
             return [];
         }
 
-        if ($this->isAllowedType($mockedObjectType)) {
+        if (! $this->isForbiddenType($mockedObjectType)) {
             return [];
         }
 
         $errorMessage = sprintf(self::ERROR_MESSAGE, $mockedObjectType->getClassName());
 
-        return [RuleErrorBuilder::message($errorMessage)
+        $ruleError = RuleErrorBuilder::message($errorMessage)
             ->identifier(RuleIdentifier::NO_TEST_MOCKS)
-            ->build()];
+            ->build();
+
+        return [$ruleError];
     }
 
     private function resolveMockedObjectType(MethodCall $methodCall, Scope $scope): ?ObjectType
@@ -85,14 +91,16 @@ final readonly class NoTestMocksRule implements Rule
         return null;
     }
 
-    private function isAllowedType(ObjectType $objectType): bool
+    private function isForbiddenType(ObjectType $objectType): bool
     {
-        foreach ($this->allowedTypes as $allowedType) {
-            if ($objectType->getClassName() === $allowedType) {
+        $groupedForbiddenTypes = array_merge(self::FORBIDDEN_TYPES, $this->forbiddenTypes);
+
+        foreach ($groupedForbiddenTypes as $forbiddenType) {
+            if ($objectType->getClassName() === $forbiddenType) {
                 return true;
             }
 
-            if ($objectType->isInstanceOf($allowedType)->yes()) {
+            if ($objectType->isInstanceOf($forbiddenType)->yes()) {
                 return true;
             }
         }
