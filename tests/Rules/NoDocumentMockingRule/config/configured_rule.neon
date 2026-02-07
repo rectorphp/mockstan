@@ -1,0 +1,2 @@
+rules:
+    - Rector\Mockstan\Rules\NoDocumentMockingRule

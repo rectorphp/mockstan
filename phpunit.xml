@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    bootstrap="tests/autoload.php"
+    colors="true"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    displayDetailsOnIncompleteTests="true"
+    cacheDirectory=".phpunit.cache"
+>
+    <testsuite name="all">
+        <directory>tests</directory>
+        <exclude>tests/Rules/ClassNameRespectsParentSuffixRule/Fixture/</exclude>
+        <exclude>tests/Rules/ExplicitExpectsMockMethodRule/Fixture/MockWithoutExpectsTest.php</exclude>
+        <exclude>tests/Rules/NoMockOnlyTestRule/Fixture/SkipConstraintValidatorTest.php</exclude>
+        <exclude>tests/Rules/ExplicitExpectsMockMethodRule/Fixture/SkipMockWithExpectsTest.php</exclude>
+    </testsuite>
+</phpunit>

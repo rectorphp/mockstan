@@ -1,0 +1,2 @@
+services:
+    - Rector\Mockstan\Doctrine\DoctrineEntityDocumentAnalyser

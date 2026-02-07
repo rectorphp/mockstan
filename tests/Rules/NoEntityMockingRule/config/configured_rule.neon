@@ -1,0 +1,5 @@
+services:
+    - Rector\Mockstan\Doctrine\DoctrineEntityDocumentAnalyser
+
+rules:
+    - Rector\Mockstan\Rules\NoEntityMockingRule

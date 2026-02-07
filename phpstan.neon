@@ -1,0 +1,34 @@
+includes:
+    - config/services/services.neon
+
+parameters:
+    treatPhpDocTypesAsCertain: false
+    errorFormat: symplify
+
+    level: 8
+
+    paths:
+        - src
+        - config
+        - tests
+
+    excludePaths:
+        # parallel
+        - packages/*-phpstan-printer/tests/*ToPhpCompiler/Fixture*
+
+        # tests
+        - '*/tests/**/Source/*'
+        - */stubs/*
+        - */Fixture/*
+
+    ignoreErrors:
+        # overly detailed
+        - '#Class Rector\\Mockstan\\(.*?) extends generic class PHPStan\\Testing\\RuleTestCase but does not specify its types\: TRule#'
+        - '#Method Rector\\Mockstan\\(.*?)\:\:getRule\(\) return type with generic interface PHPStan\\Rules\\Rule does not specify its types\: TNodeType#'
+        - '#Parameter \#2 \$expectedErrors of method PHPStan\\Testing\\RuleTestCase<PHPStan\\Rules\\Rule>\:\:analyse\(\) expects list<array\{0\: string, 1\: int, 2\?\: string\|null\}>, (.*?) given#'
+
+        # useful to have IDE know the types
+        - identifier: phpstanApi.instanceofType
+
+        # used in tests
+        - '#Public constant "Rector\\Mockstan\\(.*?)Rule\:\:ERROR_MESSAGE" is never used#'
