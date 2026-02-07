@@ -16,6 +16,8 @@ use Rector\Mockstan\Helper\NamingHelper;
 
 /**
  * @implements Rule<MethodCall>
+ *
+ * @see \Rector\Mockstan\Tests\Rules\ForbiddenClassToMockRule\ForbiddenClassToMockRuleTest
  */
 final readonly class ForbiddenClassToMockRule implements Rule
 {
@@ -34,6 +36,7 @@ final readonly class ForbiddenClassToMockRule implements Rule
      */
     private const array FORBIDDEN_TYPES = [
         SymfonyClass::REQUEST,
+        SymfonyClass::REQUEST_STACK,
     ];
 
     /**
@@ -69,11 +72,11 @@ final readonly class ForbiddenClassToMockRule implements Rule
 
         $errorMessage = sprintf(self::ERROR_MESSAGE, $mockedObjectType->getClassName());
 
-        $ruleError = RuleErrorBuilder::message($errorMessage)
+        $identifierRuleError = RuleErrorBuilder::message($errorMessage)
             ->identifier(RuleIdentifier::NO_TEST_MOCKS)
             ->build();
 
-        return [$ruleError];
+        return [$identifierRuleError];
     }
 
     private function resolveMockedObjectType(MethodCall $methodCall, Scope $scope): ?ObjectType
@@ -94,12 +97,12 @@ final readonly class ForbiddenClassToMockRule implements Rule
     {
         $groupedForbiddenTypes = array_merge(self::FORBIDDEN_TYPES, $this->forbiddenTypes);
 
-        foreach ($groupedForbiddenTypes as $forbiddenType) {
-            if ($objectType->getClassName() === $forbiddenType) {
+        foreach ($groupedForbiddenTypes as $groupedForbiddenType) {
+            if ($objectType->getClassName() === $groupedForbiddenType) {
                 return true;
             }
 
-            if ($objectType->isInstanceOf($forbiddenType)->yes()) {
+            if ($objectType->isInstanceOf($groupedForbiddenType)->yes()) {
                 return true;
             }
         }

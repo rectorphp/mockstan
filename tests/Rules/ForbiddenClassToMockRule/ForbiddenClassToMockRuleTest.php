@@ -12,6 +12,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Rector\Mockstan\Rules\ForbiddenClassToMockRule;
 use Rector\Mockstan\Tests\Rules\ForbiddenClassToMockRule\Source\SomeForbiddenType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 final class ForbiddenClassToMockRuleTest extends RuleTestCase
 {
@@ -31,12 +32,17 @@ final class ForbiddenClassToMockRuleTest extends RuleTestCase
     {
         yield [
             __DIR__ . '/Fixture/SomeMocking.php',
-            [[sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, Request::class), 14]],
+            [
+                [sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, Request::class), 15],
+                [sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, RequestStack::class), 17],
+            ],
         ];
 
         yield [
             __DIR__ . '/Fixture/HandleExtractForbiddenType.php',
-            [[sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, SomeForbiddenType::class), 14]],
+            [
+                [sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, SomeForbiddenType::class), 14],
+            ],
         ];
     }
 

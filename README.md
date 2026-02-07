@@ -20,8 +20,6 @@ composer require rector/mockstan --dev
 
 <br>
 
-@todo rules docs here
-
 ### ParamNameToTypeConventionRule
 
 Interface must be located in "Contract" or "Contracts" namespace
