@@ -12,7 +12,6 @@ use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use Rector\Mockstan\Enum\ClassName;
 use Rector\Mockstan\Enum\RuleIdentifier;
-use Rector\Mockstan\Enum\TestClassName;
 use Rector\Mockstan\Helper\NamingHelper;
 
 /**

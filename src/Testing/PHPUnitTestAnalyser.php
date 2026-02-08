@@ -11,7 +11,6 @@ use Rector\Mockstan\Enum\ClassName;
 
 final class PHPUnitTestAnalyser
 {
-
     public static function isTestClass(Scope $scope): bool
     {
         $classReflection = $scope->getClassReflection();
