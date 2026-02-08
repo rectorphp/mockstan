@@ -12,9 +12,11 @@
 >
     <testsuite name="all">
         <directory>tests</directory>
+
         <exclude>tests/Rules/ClassNameRespectsParentSuffixRule/Fixture/</exclude>
         <exclude>tests/Rules/ExplicitExpectsMockMethodRule/Fixture/MockWithoutExpectsTest.php</exclude>
         <exclude>tests/Rules/NoMockOnlyTestRule/Fixture/SkipConstraintValidatorTest.php</exclude>
         <exclude>tests/Rules/ExplicitExpectsMockMethodRule/Fixture/SkipMockWithExpectsTest.php</exclude>
+        <exclude>tests/Rules/NoMockOnlyTestRule/Fixture/SkipThirdPartyTest.php</exclude>
     </testsuite>
 </phpunit>
