@@ -6,8 +6,6 @@ namespace Rector\Mockstan\Rules;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
-use PhpParser\Node\Expr\PropertyFetch;
-use PhpParser\Node\Expr\Variable;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
@@ -53,7 +51,6 @@ final class AvoidAnyExpectsRule implements Rule
         if (! NamingHelper::isName($nestedCall->name, 'any')) {
             return [];
         }
-
 
         $identifierRuleError = RuleErrorBuilder::message(self::ERROR_MESSAGE)
             ->identifier(RuleIdentifier::AVOID_ANY_EXPECTS)
