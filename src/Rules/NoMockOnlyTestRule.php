@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Rector\Mockstan\Rules;
 
+use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
@@ -92,10 +94,13 @@ final readonly class NoMockOnlyTestRule implements Rule
         return NamingHelper::isNames($class->extends, self::THIRD_PARTY_TEST_CASES);
     }
 
-    private function findTestMethods(Class_ $classLike): array
+    /**
+     * @return ClassMethod[]
+     */
+    private function findTestMethods(Class_ $class): array
     {
         $testMethods = [];
-        foreach ($classLike->getMethods() as $classMethod) {
+        foreach ($class->getMethods() as $classMethod) {
             if (! $classMethod->isPublic()) {
                 continue;
             }
@@ -112,14 +117,14 @@ final readonly class NoMockOnlyTestRule implements Rule
     }
 
     /**
-     * @param Node\Stmt\ClassMethod[] $testMethods
+     * @param ClassMethod[] $testMethods
      */
     private function hasEveryMethodItsNew(array $testMethods): bool
     {
         $nodeFinder = new NodeFinder();
         foreach ($testMethods as $testMethod) {
-            $new = $nodeFinder->findFirstInstanceOf($testMethod, Node\Expr\New_::class);
-            if (! $new instanceof Node\Expr\New_) {
+            $new = $nodeFinder->findFirstInstanceOf($testMethod, New_::class);
+            if (! $new instanceof New_) {
                 return false;
             }
         }
