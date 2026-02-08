@@ -6,6 +6,9 @@
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
     displayDetailsOnIncompleteTests="true"
     cacheDirectory=".phpunit.cache"
+    failOnPhpunitNotice="true"
+    displayDetailsOnPhpunitNotices="true"
+    displayDetailsOnTestsThatTriggerNotices="true"
 >
     <testsuite name="all">
         <directory>tests</directory>
