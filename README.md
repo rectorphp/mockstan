@@ -2,11 +2,11 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/rector/mockstan.svg?style=flat-square)](https://packagist.org/packages/rector/mockstan/stats)
 
-Set of x+ PHPStan fun and practical rules that check:
+* Do you use extensive mocking in your PHPUnit tests?
+* Do you want to keep your tests clean, maintainable and avoid upgrade hell in the future?
+* Do you want to have test that actually test somthing?
 
-@todo
-
-Useful for any type of PHP project, from legacy to modern stack.
+This set is for you!
 
 <br>
 
