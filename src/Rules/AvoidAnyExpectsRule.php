@@ -49,7 +49,6 @@ final class AvoidAnyExpectsRule implements Rule
             return [];
         }
 
-
         $nestedCall = $firstArg->value;
         if (! NamingHelper::isName($nestedCall->name, 'any')) {
             return [];
