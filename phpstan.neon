@@ -1,6 +1,3 @@
-includes:
-    - config/services/services.neon
-
 parameters:
     treatPhpDocTypesAsCertain: false
     errorFormat: symplify

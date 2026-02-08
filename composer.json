@@ -40,15 +40,15 @@
         }
     },
     "scripts": {
-        "check-cs": "vendor/bin/ecs check --ansi",
-        "fix-cs": "vendor/bin/ecs check --fix --ansi",
-        "phpstan": "vendor/bin/phpstan analyse --ansi",
-        "rector": "vendor/bin/rector process --dry-run --ansi"
+        "check-cs": "vendor/bin/ecs check",
+        "fix-cs": "vendor/bin/ecs check --fix",
+        "phpstan": "vendor/bin/phpstan analyse",
+        "rector": "vendor/bin/rector process --dry-run"
     },
     "extra": {
         "phpstan": {
             "includes": [
-                "config/services/services.neon"
+                "config/phpunit-mocks-rules.neon"
             ]
         }
     }
