@@ -7,10 +7,10 @@ namespace Rector\Mockstan\Testing;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
+use Rector\Mockstan\Enum\ClassName;
 
 final class PHPUnitTestAnalyser
 {
-    private const string TEST_CASE_CLASS = 'PHPUnit\Framework\TestCase';
 
     public static function isTestClass(Scope $scope): bool
     {
@@ -19,7 +19,7 @@ final class PHPUnitTestAnalyser
             return false;
         }
 
-        return $classReflection->is(self::TEST_CASE_CLASS);
+        return $classReflection->is(ClassName::TEST_CASE);
     }
 
     /**

@@ -43,7 +43,7 @@ final class NoMockObjectAndRealObjectPropertyRule implements Rule
                 continue;
             }
 
-            if ($type->toString() !== ClassName::MOCK_OBJECT_CLASS) {
+            if ($type->toString() !== ClassName::MOCK_OBJECT) {
                 continue;
             }
 

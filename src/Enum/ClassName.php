@@ -6,5 +6,7 @@ namespace Rector\Mockstan\Enum;
 
 final class ClassName
 {
-    public const string MOCK_OBJECT_CLASS = 'PHPUnit\Framework\MockObject\MockObject';
+    public const string MOCK_OBJECT = 'PHPUnit\Framework\MockObject\MockObject';
+
+    public const string TEST_CASE = 'PHPUnit\Framework\TestCase';
 }

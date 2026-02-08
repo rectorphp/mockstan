@@ -62,7 +62,7 @@ final readonly class NoMockOnlyTestRule implements Rule
 
             $propertyClassName = $property->type->toString();
 
-            if ($propertyClassName !== ClassName::MOCK_OBJECT_CLASS) {
+            if ($propertyClassName !== ClassName::MOCK_OBJECT) {
                 $hasExclusivelyMockedProperties = false;
             } else {
                 $hasSomeProperties = true;

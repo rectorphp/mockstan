@@ -9,5 +9,7 @@ rules:
     # better alternative than mocks
     - Rector\Mockstan\Rules\NoDocumentMockingRule
     - Rector\Mockstan\Rules\NoEntityMockingRule
-
     - Rector\Mockstan\Rules\NoMockObjectAndRealObjectPropertyRule
+
+    # rules
+    - Rector\Mockstan\Rules\ForbiddenClassToMockRule
