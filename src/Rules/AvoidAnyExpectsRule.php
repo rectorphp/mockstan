@@ -37,6 +37,7 @@ final class AvoidAnyExpectsRule implements Rule
         if (! TestClassDetector::isTestClass($scope)) {
             return [];
         }
+
         dump('SDF');
         die;
 
