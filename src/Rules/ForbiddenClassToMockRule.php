@@ -37,6 +37,7 @@ final readonly class ForbiddenClassToMockRule implements Rule
     private const array FORBIDDEN_TYPES = [
         SymfonyClass::REQUEST,
         SymfonyClass::REQUEST_STACK,
+        'Iterator',
     ];
 
     /**
@@ -66,11 +67,12 @@ final readonly class ForbiddenClassToMockRule implements Rule
             return [];
         }
 
-        if (! $this->isForbiddenType($mockedObjectType)) {
+        $forbibdenType = $this->matchForbiddenType($mockedObjectType);
+        if (is_null($forbibdenType)) {
             return [];
         }
 
-        $errorMessage = sprintf(self::ERROR_MESSAGE, $mockedObjectType->getClassName());
+        $errorMessage = sprintf(self::ERROR_MESSAGE, $forbibdenType);
 
         $identifierRuleError = RuleErrorBuilder::message($errorMessage)
             ->identifier(RuleIdentifier::NO_TEST_MOCKS)
@@ -93,20 +95,20 @@ final readonly class ForbiddenClassToMockRule implements Rule
         return null;
     }
 
-    private function isForbiddenType(ObjectType $objectType): bool
+    private function matchForbiddenType(ObjectType $objectType): ?string
     {
         $groupedForbiddenTypes = array_merge(self::FORBIDDEN_TYPES, $this->forbiddenTypes);
 
         foreach ($groupedForbiddenTypes as $groupedForbiddenType) {
             if ($objectType->getClassName() === $groupedForbiddenType) {
-                return true;
+                return $groupedForbiddenType;
             }
 
             if ($objectType->isInstanceOf($groupedForbiddenType)->yes()) {
-                return true;
+                return $groupedForbiddenType;
             }
         }
 
-        return false;
+        return null;
     }
 }

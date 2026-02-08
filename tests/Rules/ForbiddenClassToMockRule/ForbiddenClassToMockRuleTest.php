@@ -10,6 +10,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Rector\Mockstan\Rules\ForbiddenClassToMockRule;
+use Rector\Mockstan\Tests\Rules\ForbiddenClassToMockRule\Source\IteratorChild;
 use Rector\Mockstan\Tests\Rules\ForbiddenClassToMockRule\Source\SomeForbiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -43,6 +44,19 @@ final class ForbiddenClassToMockRuleTest extends RuleTestCase
             [
                 [sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, SomeForbiddenType::class), 14],
             ],
+        ];
+
+        yield [
+            __DIR__ . '/Fixture/HandleChildType.php',
+            [
+                [sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, Iterator::class), 15],
+            ],
+        ];
+
+
+        yield [
+            __DIR__ . '/Fixture/AllowedType.php',
+            [],
         ];
     }
 
