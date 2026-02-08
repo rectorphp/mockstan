@@ -1,15 +1,16 @@
 rules:
     # mocking
     - Rector\Mockstan\Rules\NoMockOnlyTestRule
+    - Rector\Mockstan\Rules\NoMockObjectAndRealObjectPropertyRule
+
+    # overly complicated
     - Rector\Mockstan\Rules\NoDoubleConsecutiveTestMockRule
 
-    # explicit
+    # explicit expects()
     - Rector\Mockstan\Rules\ExplicitExpectsMockMethodRule
+    - Rector\Mockstan\Rules\AvoidAnyExpectsRule
 
     # better alternative than mocks
     - Rector\Mockstan\Rules\NoDocumentMockingRule
     - Rector\Mockstan\Rules\NoEntityMockingRule
-    - Rector\Mockstan\Rules\NoMockObjectAndRealObjectPropertyRule
-
-    # rules
     - Rector\Mockstan\Rules\ForbiddenClassToMockRule
