@@ -7,6 +7,7 @@ namespace Rector\Mockstan\Rules;
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\NodeFinder;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
 use PHPStan\Rules\Rule;
@@ -62,30 +63,18 @@ final readonly class NoMockOnlyTestRule implements Rule
             return [];
         }
 
-//        $hasExclusivelyMockedProperties = true;
-//        $hasSomeProperties = false;
-
         if (! ClassPropertyAnalyser::hasExclusivelyMockedProperties($classLike)) {
             return [];
         }
 
-//        foreach ($classLike->getProperties() as $property) {
-//            if (! $property->type instanceof Name) {
-//                continue;
-//            }
-//
-//            $propertyClassName = $property->type->toString();
-//
-//            if ($propertyClassName !== ClassName::MOCK_OBJECT) {
-//                $hasExclusivelyMockedProperties = false;
-//            } else {
-//                $hasSomeProperties = true;
-//            }
-//        }
-//
-//        if ($hasExclusivelyMockedProperties === false || $hasSomeProperties === false) {
-//            return [];
-//        }
+        $testMethods = $this->findTestMethods($classLike);
+        if ($testMethods === []) {
+            return [];
+        }
+
+        if ($this->hasEveryMethodItsNew($testMethods)){
+            return [];
+        }
 
         $identifierRuleError = RuleErrorBuilder::message(self::ERROR_MESSAGE)
             ->identifier(RuleIdentifier::NO_MOCK_ONLY)
@@ -101,5 +90,37 @@ final readonly class NoMockOnlyTestRule implements Rule
         }
 
         return NamingHelper::isNames($class->extends, self::THIRD_PARTY_TEST_CASES);
+    }
+
+    private function findTestMethods(Class_ $classLike): array
+    {
+        $testMethods = [];
+        foreach ($classLike->getMethods() as $classMethod) {
+            if (!$classMethod->isPublic()) {
+                continue;
+            }
+
+            $methodName = $classMethod->name->toString();
+            if (str_starts_with($methodName, 'test')) {
+                continue;
+            }
+
+            $testMethods[] = $classMethod;
+        }
+
+        return $testMethods;
+    }
+
+    private function hasEveryMethodItsNew(array $testMethods): false
+    {
+        $nodeFinder = new NodeFinder();
+        foreach ($testMethods as $testMethod) {
+            $new = $nodeFinder->findFirstInstanceOf($testMethod, Node\Expr\New_::class);
+            if (!$new instanceof Node\Expr\New_) {
+                return false;
+            }
+        }
+
+        return false;
     }
 }
