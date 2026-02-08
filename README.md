@@ -20,6 +20,36 @@ composer require rector/mockstan --dev
 
 <br>
 
+### AvoidAnyExpectsRule
+
+Disallow usage of `any()` expectation in mocks to ensure that all mock interactions are explicitly defined and verified.
+
+```yaml
+rules:
+    - Rector\Mockstan\Rules\AvoidAnyExpectsRule
+```
+
+```php
+$someMock = $this->createMock(Service::class);
+$someMock->expects($this->any())
+    ->method('calculate')
+    ->willReturn(10);
+```
+
+:x:
+
+```php
+$someMock = $this->createMock(Service::class);
+$someMock->expects($this->once())
+    ->method('calculate')
+    ->willReturn(10);
+```
+
+:+1:
+
+
+<br>
+
 ### ExplicitExpectsMockMethodRule
 
 Require explicit `expects()` usage when setting up mocks to avoid silent stubs. This is reuired since PHPUnit 12 to avoid silent stubs.
