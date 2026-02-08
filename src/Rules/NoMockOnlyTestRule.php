@@ -14,6 +14,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use Rector\Mockstan\Enum\ClassName;
 use Rector\Mockstan\Enum\RuleIdentifier;
 use Rector\Mockstan\Enum\SymfonyClass;
+use Rector\Mockstan\PHPUnit\TestClassDetector;
 use Rector\Mockstan\Testing\PHPUnitTestAnalyser;
 
 /**
@@ -35,7 +36,7 @@ final readonly class NoMockOnlyTestRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        if (! PHPUnitTestAnalyser::isTestClass($scope)) {
+        if (!TestClassDetector::isTestClass($scope)) {
             return [];
         }
 

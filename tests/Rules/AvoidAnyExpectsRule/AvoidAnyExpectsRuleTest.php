@@ -26,7 +26,7 @@ final class AvoidAnyExpectsRuleTest extends RuleTestCase
      */
     public static function provideData(): Iterator
     {
-        yield [__DIR__ . '/Fixture/SomeAny.php', [[AvoidAnyExpectsRule::ERROR_MESSAGE, 12]]];
+        yield [__DIR__ . '/Fixture/SomeAny.php', [[AvoidAnyExpectsRule::ERROR_MESSAGE, 13]]];
     }
 
     protected function getRule(): Rule

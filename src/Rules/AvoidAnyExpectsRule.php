@@ -38,9 +38,6 @@ final class AvoidAnyExpectsRule implements Rule
             return [];
         }
 
-        dump('SDF');
-        die;
-
         if (! NamingHelper::isName($node->name, 'expects')) {
             return [];
         }
