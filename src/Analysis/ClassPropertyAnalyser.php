@@ -26,7 +26,7 @@ final class ClassPropertyAnalyser
         return true;
     }
 
-    public static function isMockObjectProperty(Property $property): bool
+    private static function isMockObjectProperty(Property $property): bool
     {
         if (! $property->type instanceof Name) {
             return false;
