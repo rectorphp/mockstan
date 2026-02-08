@@ -46,13 +46,6 @@ final class ForbiddenClassToMockRuleTest extends RuleTestCase
         ];
 
         yield [
-            __DIR__ . '/Fixture/HandleChildType.php',
-            [
-                [sprintf(ForbiddenClassToMockRule::ERROR_MESSAGE, Iterator::class), 15],
-            ],
-        ];
-
-        yield [
             __DIR__ . '/Fixture/AllowedType.php',
             [],
         ];

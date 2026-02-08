@@ -10,6 +10,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\ObjectType;
+use Rector\Mockstan\Enum\ClassName;
 use Rector\Mockstan\Enum\RuleIdentifier;
 use Rector\Mockstan\Enum\SymfonyClass;
 use Rector\Mockstan\Helper\NamingHelper;
@@ -38,7 +39,7 @@ final readonly class ForbiddenClassToMockRule implements Rule
         SymfonyClass::REQUEST,
         SymfonyClass::REQUEST_STACK,
         SymfonyClass::SYMFONY_EVENT,
-        'Iterator',
+        ClassName::ODM_ITERATOR,
     ];
 
     /**
