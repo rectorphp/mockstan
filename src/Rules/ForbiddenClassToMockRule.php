@@ -37,6 +37,7 @@ final readonly class ForbiddenClassToMockRule implements Rule
     private const array FORBIDDEN_TYPES = [
         SymfonyClass::REQUEST,
         SymfonyClass::REQUEST_STACK,
+        SymfonyClass::SYMFONY_EVENT,
         'Iterator',
     ];
 
