@@ -11,6 +11,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
+use Rector\Mockstan\Analysis\ClassPropertyAnalyser;
 use Rector\Mockstan\Enum\ClassName;
 use Rector\Mockstan\Enum\RuleIdentifier;
 use Rector\Mockstan\Enum\SymfonyClass;
@@ -63,6 +64,10 @@ final readonly class NoMockOnlyTestRule implements Rule
 
         $hasExclusivelyMockedProperties = true;
         $hasSomeProperties = false;
+
+        if (! ClassPropertyAnalyser::hasExclusivelyMockedProperties($classLike)) {
+            return [];
+        }
 
         foreach ($classLike->getProperties() as $property) {
             if (! $property->type instanceof Name) {

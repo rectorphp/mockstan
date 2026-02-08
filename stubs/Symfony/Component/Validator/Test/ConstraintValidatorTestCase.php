@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symfony\Component\Validator\Test;
 
-abstract class ConstraintValidatorTestCase
+use PHPUnit\Framework\TestCase;
+
+abstract class ConstraintValidatorTestCase extends TestCase
 {
 }
