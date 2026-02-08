@@ -68,7 +68,7 @@ final readonly class ForbiddenClassToMockRule implements Rule
         }
 
         $forbibdenType = $this->matchForbiddenType($mockedObjectType);
-        if (is_null($forbibdenType)) {
+        if ($forbibdenType === null) {
             return [];
         }
 
