@@ -13,5 +13,7 @@ final class SymfonyClass
 
     public const string VALIDATOR_TEST_CASE = 'Symfony\Component\Validator\Test\ConstraintValidatorTestCase';
 
+    public const string SYMFONY_EVENT = 'Symfony\Contracts\EventDispatcher\Event';
+
     public const string REQUEST_STACK = 'Symfony\Component\HttpFoundation\RequestStack';
 }
