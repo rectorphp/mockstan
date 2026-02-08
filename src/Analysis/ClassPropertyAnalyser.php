@@ -17,7 +17,7 @@ final class ClassPropertyAnalyser
             return false;
         }
 
-        foreach ($class as $property) {
+        foreach ($class->getProperties() as $property) {
             if (! self::isMockObjectProperty($property)) {
                 return false;
             }
