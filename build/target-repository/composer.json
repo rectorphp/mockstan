@@ -10,10 +10,7 @@
     "autoload": {
         "psr-4": {
             "Rector\\Mockstan\\": "src"
-        },
-        "files": [
-            "src/functions/fast-functions.php"
-        ]
+        }
     },
     "extra": {
         "phpstan": {
