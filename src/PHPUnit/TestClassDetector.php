@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rector\Mockstan\PHPUnit;
 
-use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
 use Rector\Mockstan\Enum\ClassName;
