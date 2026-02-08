@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Rector\Mockstan\Rules;
 
-use PhpParser\Node\Expr\New_;
-use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node;
+use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\NodeFinder;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
