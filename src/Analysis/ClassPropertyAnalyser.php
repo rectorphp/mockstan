@@ -23,7 +23,6 @@ final class ClassPropertyAnalyser
             }
         }
 
-
         return true;
     }
 

@@ -13,7 +13,6 @@ use PHPStan\Node\InClassNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use Rector\Mockstan\Analysis\ClassPropertyAnalyser;
-use Rector\Mockstan\Enum\ClassName;
 use Rector\Mockstan\Enum\RuleIdentifier;
 use Rector\Mockstan\Enum\SymfonyClass;
 use Rector\Mockstan\Helper\NamingHelper;
@@ -72,7 +71,7 @@ final readonly class NoMockOnlyTestRule implements Rule
             return [];
         }
 
-        if ($this->hasEveryMethodItsNew($testMethods)){
+        if ($this->hasEveryMethodItsNew($testMethods)) {
             return [];
         }
 
@@ -96,7 +95,7 @@ final readonly class NoMockOnlyTestRule implements Rule
     {
         $testMethods = [];
         foreach ($classLike->getMethods() as $classMethod) {
-            if (!$classMethod->isPublic()) {
+            if (! $classMethod->isPublic()) {
                 continue;
             }
 
@@ -116,7 +115,7 @@ final readonly class NoMockOnlyTestRule implements Rule
         $nodeFinder = new NodeFinder();
         foreach ($testMethods as $testMethod) {
             $new = $nodeFinder->findFirstInstanceOf($testMethod, Node\Expr\New_::class);
-            if (!$new instanceof Node\Expr\New_) {
+            if (! $new instanceof Node\Expr\New_) {
                 return false;
             }
         }
