@@ -37,6 +37,8 @@ final class AvoidAnyExpectsRule implements Rule
         if (! TestClassDetector::isTestClass($scope)) {
             return [];
         }
+        dump('SDF');
+        die;
 
         if (! NamingHelper::isName($node->name, 'expects')) {
             return [];
@@ -46,6 +48,7 @@ final class AvoidAnyExpectsRule implements Rule
         if (! $firstArg->value instanceof MethodCall) {
             return [];
         }
+
 
         $nestedCall = $firstArg->value;
         if (! NamingHelper::isName($nestedCall->name, 'any')) {
