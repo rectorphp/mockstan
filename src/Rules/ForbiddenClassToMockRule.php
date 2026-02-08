@@ -77,7 +77,7 @@ final readonly class ForbiddenClassToMockRule implements Rule
         $errorMessage = sprintf(self::ERROR_MESSAGE, $forbibdenType);
 
         $identifierRuleError = RuleErrorBuilder::message($errorMessage)
-            ->identifier(RuleIdentifier::NO_TEST_MOCKS)
+            ->identifier(RuleIdentifier::FORBIDDEN_CLASS_TO_MOCK)
             ->build();
 
         return [$identifierRuleError];

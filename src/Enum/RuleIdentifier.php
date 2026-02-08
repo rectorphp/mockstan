@@ -21,7 +21,7 @@ final class RuleIdentifier
 
     public const string EXPLICIT_EXPECTS_MOCK_METHOD = 'mockstan.explicitExpectsMockMethod';
 
-    public const string NO_TEST_MOCKS = 'mockstan.noTestMocks';
+    public const string FORBIDDEN_CLASS_TO_MOCK = 'mockstan.forbiddenClassToMock';
 
     public const string AVOID_ANY_EXPECTS = 'mockstan.avoidAnyExpects';
 }
