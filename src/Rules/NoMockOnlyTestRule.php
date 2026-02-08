@@ -67,6 +67,7 @@ final readonly class NoMockOnlyTestRule implements Rule
         }
 
         $testMethods = $this->findTestMethods($classLike);
+
         if ($testMethods === []) {
             return [];
         }
@@ -100,7 +101,7 @@ final readonly class NoMockOnlyTestRule implements Rule
             }
 
             $methodName = $classMethod->name->toString();
-            if (str_starts_with($methodName, 'test')) {
+            if (! str_starts_with($methodName, 'test')) {
                 continue;
             }
 
@@ -110,7 +111,10 @@ final readonly class NoMockOnlyTestRule implements Rule
         return $testMethods;
     }
 
-    private function hasEveryMethodItsNew(array $testMethods): false
+    /**
+     * @param Node\Stmt\ClassMethod[] $testMethods
+     */
+    private function hasEveryMethodItsNew(array $testMethods): bool
     {
         $nodeFinder = new NodeFinder();
         foreach ($testMethods as $testMethod) {
@@ -120,6 +124,6 @@ final readonly class NoMockOnlyTestRule implements Rule
             }
         }
 
-        return false;
+        return true;
     }
 }

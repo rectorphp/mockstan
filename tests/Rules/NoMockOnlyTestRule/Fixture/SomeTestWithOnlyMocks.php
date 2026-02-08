@@ -18,4 +18,8 @@ final class SomeTestWithOnlyMocks extends TestCase
 
         $this->anotherMock = $this->createMock(SecondClass::class);
     }
+
+    public function test()
+    {
+    }
 }

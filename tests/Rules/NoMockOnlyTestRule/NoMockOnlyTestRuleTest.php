@@ -18,6 +18,8 @@ final class NoMockOnlyTestRuleTest extends RuleTestCase
     #[DataProvider('provideData')]
     public function testRule(string $filePath, array $expectedErrorMessagesWithLines): void
     {
+        dump($filePath);
+
         $this->analyse([$filePath], $expectedErrorMessagesWithLines);
     }
 
