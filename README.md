@@ -20,10 +20,9 @@ composer require rector/mockstan --dev
 
 <br>
 
-```markdown
 ### ExplicitExpectsMockMethodRule
 
-Require explicit `expects()` usage when setting up mocks to avoid silent stubs.
+Require explicit `expects()` usage when setting up mocks to avoid silent stubs. This is reuired since PHPUnit 12 to avoid silent stubs.
 
 ```yaml
 rules:
@@ -31,24 +30,24 @@ rules:
 ```
 
 ```php
-// Bad (implicit stubbing)
-$mock = $this->createMock(Service::class);
-$mock->method('calculate')->willReturn(10);
+$someMock = $this->createMock(Service::class);
+$someMock->method('calculate')->willReturn(10);
 ```
 
 :x:
 
 ```php
-// Good (explicit expects)
-$mock = $this->createMock(Service::class);
-$mock->expects($this->any())->method('calculate')->willReturn(10);
+$someMock = $this->createMock(Service::class);
+$someMock->expects($this->once())->method('calculate')->willReturn(10);
 ```
+
+:+1:
 
 <br>
 
 ### ForbiddenClassToMockRule
 
-Disallow mocking of forbidden/core classes (e.g. `\DateTime`, framework internals).
+Disallow mocking of forbidden/core classes (e.g. `\DateTime`, Symfony `Request` or `RequestStack`, `Iterable`, Symfony and Doctine event objects etc.).
 
 ```yaml
 rules:
@@ -56,22 +55,22 @@ rules:
 ```
 
 ```php
-// Bad
-$dtMock = $this->createMock(\DateTime::class);
+$dateTimeMock = $this->createMock(\DateTime::class);
 ```
 
 :x:
 
 ```php
-// Good
-$dt = new \DateTime();
+$dateTime = new \DateTime();
 ```
+
+:+1:
 
 <br>
 
 ### NoDocumentMockingRule
 
-Prevent mocking of document classes (persisted models) — use real instances or factories.
+Prevent mocking of Doctrine ODM document classes. Use real instances instead.
 
 ```yaml
 rules:
@@ -79,22 +78,22 @@ rules:
 ```
 
 ```php
-// Bad
 $docMock = $this->createMock(App\Document\User::class);
 ```
 
 :x:
 
 ```php
-// Good
 $user = new App\Document\User();
 ```
+
+:+1:
 
 <br>
 
 ### NoDoubleConsecutiveTestMockRule
 
-Avoid creating multiple consecutive mocks in test body that indicate poor test design.
+Avoid creating multiple consecutive methods mocks, one for params and other for return. Use single instead.
 
 ```yaml
 rules:
@@ -102,24 +101,32 @@ rules:
 ```
 
 ```php
-// Bad
-$a = $this->createMock(A::class);
-$b = $this->createMock(B::class);
+$someMock = $this->createMock(SomeClass::class);
+
+$someMock->expects($this->once())
+    ->method('foo')
+    ->willReturnOnConsecutiveCalls(...)
+    ->willReturnCallback(...)
 ```
 
 :x:
 
 ```php
-// Good — combine setup or use single test-specific fixture
-$a = $this->createMock(A::class);
-// configure $a as needed, or refactor test
+$someMock = $this->createMock(SomeClass::class);
+
+$someMock->expects($this->once())
+    ->method('foo')
+    // handle params in single call
+    ->willReturnCallback(...)
 ```
+
+:+1:
 
 <br>
 
 ### NoEntityMockingRule
 
-Do not mock entity classes (Doctrine entities); use real entity instances.
+Do not mock Doctrine entity classes. Use real object instance instead.
 
 ```yaml
 rules:
@@ -127,16 +134,16 @@ rules:
 ```
 
 ```php
-// Bad
 $entityMock = $this->createMock(App\Entity\Product::class);
 ```
 
 :x:
 
 ```php
-// Good
 $product = new App\Entity\Product();
 ```
+
+:+1:
 
 <br>
 
@@ -157,11 +164,9 @@ $this->service = new Service();
 :x:
 
 ```php
-// Good — keep property consistent or isolate tests
-$this->service = $this->createMock(Service::class);
+$this->someMock = $this->createMock(AnotherService::class);
 
-// or
-$this->service = new Service();
+$this->realService = new Service();
 ```
 
 :+1:
@@ -171,7 +176,7 @@ $this->service = new Service();
 
 ### NoMockOnlyTestRule
 
-Detect tests that only create mocks and never assert behavior — require meaningful assertions.
+Avoid tests that only create mocks and never assert behavior. Require meaningful assertions with at least once real object to test.
 
 ```yaml
 rules:
@@ -179,10 +184,15 @@ rules:
 ```
 
 ```php
-// Bad
-public function testSomething()
+public function testNothing()
 {
-    $this->createMock(Dependency::class);
+    $someMock = $this->createMock(Dependency::class);
+
+    $someMock->expects($this->once())
+        ->method('doSomething')
+        ->willReturn(true);
+
+    $this->assertSame($someMock->doSomething());
 }
 ```
 
@@ -191,42 +201,10 @@ public function testSomething()
 ```php
 public function testSomething()
 {
-    $dep = $this->createMock(Dependency::class);
-    $this->assertInstanceOf(Dependency::class, $dep);
-}
-```
+    $someMock = $this->createMock(Dependency::class);
+    $realObject = new RealObject($someMock);
 
-:+1:
-
-
-
-
-### ParamNameToTypeConventionRule
-
-Interface must be located in "Contract" or "Contracts" namespace
-
-```yaml
-rules:
-    - Rector\Mockstan\Rules\CheckRequiredInterfaceInContractNamespaceRule
-```
-
-```php
-namespace App\Repository;
-
-interface ProductRepositoryInterface
-{
-}
-```
-
-:x:
-
-<br>
-
-```php
-namespace App\Contract\Repository;
-
-interface ProductRepositoryInterface
-{
+    $this->assertTrue($realObject->doSomething());
 }
 ```
 
