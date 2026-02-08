@@ -2,12 +2,12 @@
 
 namespace Rector\Mockstan\Tests\Rules\NoMockOnlyTestRule\Fixture;
 
+use PHPUnit\Framework\TestCase;
 use Rector\Mockstan\Tests\Rules\NoMockOnlyTestRule\Source\FirstClass;
 use Rector\Mockstan\Tests\Rules\NoMockOnlyTestRule\Source\SecondClass;
 use Rector\Mockstan\Tests\Rules\NoMockOnlyTestRule\Source\SomeInstance;
-use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-final class SkipAllMockedButAlwaysNewInTest extends ConstraintValidatorTestCase
+final class SkipAllMockedButAlwaysNewInTest extends TestCase
 {
     private \PHPUnit\Framework\MockObject\MockObject $firstMock;
 

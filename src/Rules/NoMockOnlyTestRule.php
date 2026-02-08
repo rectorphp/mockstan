@@ -62,30 +62,30 @@ final readonly class NoMockOnlyTestRule implements Rule
             return [];
         }
 
-        $hasExclusivelyMockedProperties = true;
-        $hasSomeProperties = false;
+//        $hasExclusivelyMockedProperties = true;
+//        $hasSomeProperties = false;
 
         if (! ClassPropertyAnalyser::hasExclusivelyMockedProperties($classLike)) {
             return [];
         }
 
-        foreach ($classLike->getProperties() as $property) {
-            if (! $property->type instanceof Name) {
-                continue;
-            }
-
-            $propertyClassName = $property->type->toString();
-
-            if ($propertyClassName !== ClassName::MOCK_OBJECT) {
-                $hasExclusivelyMockedProperties = false;
-            } else {
-                $hasSomeProperties = true;
-            }
-        }
-
-        if ($hasExclusivelyMockedProperties === false || $hasSomeProperties === false) {
-            return [];
-        }
+//        foreach ($classLike->getProperties() as $property) {
+//            if (! $property->type instanceof Name) {
+//                continue;
+//            }
+//
+//            $propertyClassName = $property->type->toString();
+//
+//            if ($propertyClassName !== ClassName::MOCK_OBJECT) {
+//                $hasExclusivelyMockedProperties = false;
+//            } else {
+//                $hasSomeProperties = true;
+//            }
+//        }
+//
+//        if ($hasExclusivelyMockedProperties === false || $hasSomeProperties === false) {
+//            return [];
+//        }
 
         $identifierRuleError = RuleErrorBuilder::message(self::ERROR_MESSAGE)
             ->identifier(RuleIdentifier::NO_MOCK_ONLY)

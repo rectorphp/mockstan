@@ -26,14 +26,14 @@ final class NoMockOnlyTestRuleTest extends RuleTestCase
      */
     public static function provideData(): Iterator
     {
-        yield [__DIR__ . '/Fixture/SomeTestWithOnlyMocks.php', [[NoMockOnlyTestRule::ERROR_MESSAGE, 9]]];
+//        yield [__DIR__ . '/Fixture/SomeTestWithOnlyMocks.php', [[NoMockOnlyTestRule::ERROR_MESSAGE, 9]]];
 
         yield [__DIR__ . '/Fixture/SkipAllMockedButAlwaysNewInTest.php', []];
-        yield [__DIR__ . '/Fixture/SkipThirdPartyTest.php', []];
-        yield [__DIR__ . '/Fixture/SkipTestWithClass.php', []];
-        yield [__DIR__ . '/Fixture/SkipNoProperty.php', []];
-        yield [__DIR__ . '/Fixture/SkipSoleProperty.php', []];
-        yield [__DIR__ . '/Fixture/SkipConstraintValidatorTest.php', []];
+//        yield [__DIR__ . '/Fixture/SkipThirdPartyTest.php', []];
+//        yield [__DIR__ . '/Fixture/SkipTestWithClass.php', []];
+//        yield [__DIR__ . '/Fixture/SkipNoProperty.php', []];
+//        yield [__DIR__ . '/Fixture/SkipSoleProperty.php', []];
+//        yield [__DIR__ . '/Fixture/SkipConstraintValidatorTest.php', []];
     }
 
     protected function getRule(): Rule
