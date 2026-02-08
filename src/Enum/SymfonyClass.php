@@ -16,4 +16,6 @@ final class SymfonyClass
     public const string SYMFONY_EVENT = 'Symfony\Contracts\EventDispatcher\Event';
 
     public const string REQUEST_STACK = 'Symfony\Component\HttpFoundation\RequestStack';
+
+    public const string FORM_TYPE_TEST_CASE = 'Symfony\Component\Form\Test\TypeTestCase';
 }

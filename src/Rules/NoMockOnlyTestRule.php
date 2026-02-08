@@ -14,6 +14,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use Rector\Mockstan\Enum\ClassName;
 use Rector\Mockstan\Enum\RuleIdentifier;
 use Rector\Mockstan\Enum\SymfonyClass;
+use Rector\Mockstan\Helper\NamingHelper;
 use Rector\Mockstan\PHPUnit\TestClassDetector;
 
 /**
@@ -24,6 +25,14 @@ use Rector\Mockstan\PHPUnit\TestClassDetector;
 final readonly class NoMockOnlyTestRule implements Rule
 {
     public const string ERROR_MESSAGE = 'Test should have at least one non-mocked property, to test something';
+
+    /**
+     * @var string[]
+     */
+    private const array THIRD_PARTY_TEST_CASES = [
+        SymfonyClass::FORM_TYPE_TEST_CASE,
+        SymfonyClass::VALIDATOR_TEST_CASE,
+    ];
 
     public function getNodeType(): string
     {
@@ -44,7 +53,7 @@ final readonly class NoMockOnlyTestRule implements Rule
             return [];
         }
 
-        if ($classLike->extends instanceof Name && $classLike->extends->toString() === SymfonyClass::VALIDATOR_TEST_CASE) {
+        if ($this->isThirdPartyTestCase($classLike)) {
             return [];
         }
 
@@ -78,5 +87,14 @@ final readonly class NoMockOnlyTestRule implements Rule
             ->build();
 
         return [$identifierRuleError];
+    }
+
+    private function isThirdPartyTestCase(Class_ $class): bool
+    {
+        if (! $class->extends instanceof Name) {
+            return false;
+        }
+
+        return NamingHelper::isNames($class->extends, self::THIRD_PARTY_TEST_CASES);
     }
 }
