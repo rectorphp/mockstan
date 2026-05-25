@@ -234,6 +234,35 @@ $this->realService = new Service();
 
 <br>
 
+### RequireAtLeastOneRule
+
+Disallow `atLeast(0)` on mock expectations, as it matches any number of calls (including zero) and provides no real verification. Require a value of `1` or higher.
+
+```yaml
+rules:
+    - Rector\Mockstan\Rules\RequireAtLeastOneRule
+```
+
+```php
+$someMock = $this->createMock(Service::class);
+$someMock->expects($this->atLeast(0))
+    ->method('calculate')
+    ->willReturn(10);
+```
+
+:x:
+
+```php
+$someMock = $this->createMock(Service::class);
+$someMock->expects($this->atLeast(1))
+    ->method('calculate')
+    ->willReturn(10);
+```
+
+:+1:
+
+<br>
+
 ### NoMockOnlyTestRule
 
 Avoid tests that only create mocks and never assert behavior. Require meaningful assertions with at least once real object to test.
