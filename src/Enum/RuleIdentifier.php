@@ -24,4 +24,6 @@ final class RuleIdentifier
     public const string FORBIDDEN_CLASS_TO_MOCK = 'mockstan.forbiddenClassToMock';
 
     public const string AVOID_ANY_EXPECTS = 'mockstan.avoidAnyExpects';
+
+    public const string REQUIRE_AT_LEAST_ONE = 'mockstan.requireAtLeastOne';
 }
