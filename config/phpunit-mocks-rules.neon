@@ -9,6 +9,7 @@ rules:
     # explicit expects()
     - Rector\Mockstan\Rules\ExplicitExpectsMockMethodRule
     - Rector\Mockstan\Rules\AvoidAnyExpectsRule
+    - Rector\Mockstan\Rules\NoWithOnStubRule
 
     # better alternative than mocks
     - Rector\Mockstan\Rules\NoDocumentMockingRule

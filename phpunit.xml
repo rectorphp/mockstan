@@ -16,5 +16,6 @@
         <exclude>tests/Rules/ClassNameRespectsParentSuffixRule/Fixture/</exclude>
         <exclude>tests/Rules/ExplicitExpectsMockMethodRule/Fixture</exclude>
         <exclude>tests/Rules/NoMockOnlyTestRule/Fixture</exclude>
+        <exclude>tests/Rules/NoWithOnStubRule/Fixture</exclude>
     </testsuite>
 </phpunit>
