@@ -98,6 +98,36 @@ $dateTime = new \DateTime();
 
 <br>
 
+### NoWithOnStubRule
+
+Disallow `with()` on stubs (mocks without `expects()`). PHPUnit deprecates `with*()` on test stubs because they silently swallow argument mismatches.
+
+```yaml
+rules:
+    - Rector\Mockstan\Rules\NoWithOnStubRule
+```
+
+```php
+$someMock = $this->createMock(Service::class);
+$someMock->method('calculate')
+    ->with(10)
+    ->willReturn(20);
+```
+
+:x:
+
+```php
+$someMock = $this->createMock(Service::class);
+$someMock->expects($this->once())
+    ->method('calculate')
+    ->with(10)
+    ->willReturn(20);
+```
+
+:+1:
+
+<br>
+
 ### NoDocumentMockingRule
 
 Prevent mocking of Doctrine ODM document classes. Use real instances instead.

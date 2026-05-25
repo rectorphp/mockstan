@@ -25,5 +25,7 @@ final class RuleIdentifier
 
     public const string AVOID_ANY_EXPECTS = 'mockstan.avoidAnyExpects';
 
+    public const string NO_WITH_ON_STUB = 'mockstan.noWithOnStub';
+
     public const string REQUIRE_AT_LEAST_ONE = 'mockstan.requireAtLeastOne';
 }
