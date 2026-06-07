@@ -2,6 +2,23 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/rector/mockstan.svg?style=flat-square)](https://packagist.org/packages/rector/mockstan/stats)
 
+> [!WARNING]
+> **This package is deprecated.** All rules have been merged into [symplify/phpstan-rules](https://github.com/symplify/phpstan-rules).
+>
+> Migrate with 2 simple steps:
+>
+> ```bash
+> composer remove rector/mockstan
+> composer require symplify/phpstan-rules --dev
+> ```
+>
+> Then enable all mocking rules with single parameter in your `phpstan.neon`:
+>
+> ```yaml
+> parameters:
+>     mocks: true
+> ```
+
 * Do you use extensive mocking in your PHPUnit tests?
 * Do you want to keep your tests clean, maintainable and avoid upgrade hell in the future?
 * Do you want to have test that actually test somthing?
