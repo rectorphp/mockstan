@@ -2,6 +2,9 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/rector/mockstan.svg?style=flat-square)](https://packagist.org/packages/rector/mockstan/stats)
 
+> [!WARNING]
+> **This package is deprecated.** Use [`symplify/phpstan-rules`](https://github.com/symplify/phpstan-rules) instead.
+
 * Do you use extensive mocking in your PHPUnit tests?
 * Do you want to keep your tests clean, maintainable and avoid upgrade hell in the future?
 * Do you want to have test that actually test somthing?
